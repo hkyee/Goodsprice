@@ -9,6 +9,15 @@ class home extends StatefulWidget {
 
 class _homeState extends State<home> {
   String selectedStore = "Select store";
+  Map<String, Map<String, double>> scanBoxDimensions = {
+    '7 Eleven': {'width': 250, 'height': 250},
+    'NSK Trade City': {'width': 20, 'height': 20},
+    'KK Mart': {'width': 20, 'height': 20},
+    '99 Speedmart': {'width': 20, 'height': 20},
+    'Supervalue': {'width': 350, 'height': 150},
+  };
+  double scanBoxHeight = 0;
+  double scanBoxWidth = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -29,17 +38,29 @@ class _homeState extends State<home> {
             margin: EdgeInsets.all(50.0),
             child: ElevatedButton(
               onPressed: () {
-                Navigator.pushNamed(context, '/camera');
+                // An example to push arguments to new page
+                Navigator.pushNamed(
+                  context,
+                  '/camera',
+                  arguments: {'width': scanBoxWidth, 'height': scanBoxHeight},
+                );
               },
-              child: Text("Capture Image"),
+              child: Text("Scan Price Tag"),
             ),
           ),
           TextButton.icon(
             onPressed: () async {
+              // An example to get variables from page
               dynamic result =
                   await Navigator.pushNamed(context, '/storeSelector');
               setState(() {
                 selectedStore = result.toString();
+                if (scanBoxDimensions.containsKey(selectedStore)) {
+                  scanBoxWidth =
+                      (scanBoxDimensions[selectedStore]?['width'] ?? 0);
+                  scanBoxHeight =
+                      (scanBoxDimensions[selectedStore]?['height'] ?? 0);
+                }
               });
             },
             label: Text(selectedStore),

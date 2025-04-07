@@ -1,0 +1,2 @@
+/home/herrken/Projects/flutter/goodsprice/android/app/.cxx/Debug/6w1s5a6v/x86/CMakeFiles/edit_cache.dir
+/home/herrken/Projects/flutter/goodsprice/android/app/.cxx/Debug/6w1s5a6v/x86/CMakeFiles/rebuild_cache.dir

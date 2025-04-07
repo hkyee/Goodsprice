@@ -1,0 +1,1 @@
+/home/herrken/Projects/flutter/goodsprice/build/app/intermediates/cxx/Debug/6w1s5a6v/obj/x86_64

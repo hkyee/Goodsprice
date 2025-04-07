@@ -4,68 +4,19 @@ import 'package:image_picker/image_picker.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 import 'package:goodsprice/models/7eleven.dart';
 
-class camera extends StatefulWidget {
-  const camera({super.key});
+class scanResult extends StatefulWidget {
+  const scanResult({super.key});
 
   @override
-  State<camera> createState() => _cameraState();
+  State<scanResult> createState() => _cameraState();
 }
 
-class _cameraState extends State<camera> {
+class _cameraState extends State<scanResult> {
   final ImagePicker _picker = ImagePicker();
   XFile? _image; // Holds the Captures image (not to gallery)
   List<String> _extractedText = [];
   String _extractedPrice = "";
   String _extractedItemName = "";
-
-  // A function to scan text from images
-  // Future<void> _scanText(File imageFile) async {
-  //   // Final is set to ensure it is set only once
-  //   final textRecognizer = TextRecognizer(script: TextRecognitionScript.latin);
-  //   final inputImage = InputImage.fromFile(imageFile);
-
-  //   final RecognizedText recognizedText =
-  //       await textRecognizer.processImage(inputImage);
-
-  //   setState(() {
-  //     _extractedText = recognizedText.text.isNotEmpty
-  //         ? recognizedText.text
-  //         : "No text found!";
-  //     // Separate all by spaces
-  //     _extractedText = _extractedText.replaceAll("\n", " ");
-
-  //     // Inner function to extract price data
-  //     String extractPriceData(String text) {
-  //       // RegExp priceRegex = RegExp(r'(RM\s?)?\d+(\.\d{1,2})?');
-  //       RegExp priceRegex = RegExp(r'(RM\s?)?\d+\.(\d{1,2})?$');
-
-  //       Match? match = priceRegex.firstMatch(text);
-  //       if (match != null) {
-  //         // Returns the whole matched group. If null, return "No Price found".
-  //         return match.group(0) ?? "No Price found";
-  //       }
-  //       // If null, return "No Price found".
-  //       return "No Price found";
-  //     }
-  //     // extractPriceData End
-
-  //     // Inner function to extract item name
-  //     String extractItemName(String text) {
-  //       RegExp itemNameRegex = RegExp(r'');
-  //       return "";
-  //     }
-
-  //     for (String text in _extractedText.split(" ")) {
-  //       _extractedPrice = extractPriceData(text);
-  //       // Kicks out of the loop if price is found.
-  //       if (_extractedPrice != "No Price found") {
-  //         break;
-  //       }
-  //     }
-  //   });
-
-  //   textRecognizer.close();
-  // }
 
   // Function to edit item name
   void _editItemName() {

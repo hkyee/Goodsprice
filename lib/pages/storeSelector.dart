@@ -13,7 +13,7 @@ class _storeSelectorState extends State<storeSelector> {
     'NSK Trade City': 'NSK.jpg',
     'KK Mart': 'KK_Mart.png',
     '99 Speedmart': '99SM.png',
-    'NSK Trade City': 'NSK.jpg',
+    'Supervalue': 'supervalue.jpg'
   };
 
   @override
