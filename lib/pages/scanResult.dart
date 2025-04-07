@@ -38,7 +38,7 @@ class _ScanresultState extends State<scanResult> {
               onPressed: () {
                 // Close dialog
                 Navigator.pop(context);
-              }, // LMAO
+              },
               child: Text("Cancel"),
             ),
             ElevatedButton(
@@ -108,13 +108,33 @@ class _ScanresultState extends State<scanResult> {
   // Function END
 
   @override
+  void initState() {
+    super.initState();
+
+    // Fetch from route only once
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) {
+        final args =
+            ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+
+        setState(
+          () {
+            _extractedPrice = args['price'];
+            _extractedItemName = args['itemName'];
+          },
+        );
+      },
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
     final args =
         ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
 
     String imagePath = args['imagePath'];
-    _extractedPrice = args['price'];
-    _extractedItemName = args['itemName'];
+    // _extractedPrice = args['price'];
+    // _extractedItemName = args['itemName'];
     Rect priceTagBox = args['priceTagBox'];
     List<TextBlock> textBlocks = args['textBlocks'];
     List<int> imageRes = args['imageRes'];
