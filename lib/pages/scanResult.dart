@@ -111,7 +111,7 @@ class _ScanresultState extends State<scanResult> {
   void initState() {
     super.initState();
 
-    // Fetch from route only once
+    // Fetch from route only once, this is to avoid conflict with setState() when updating corrected price and name;
     WidgetsBinding.instance.addPostFrameCallback(
       (_) {
         final args =
