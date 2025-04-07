@@ -38,7 +38,7 @@ class _ScanresultState extends State<scanResult> {
               onPressed: () {
                 // Close dialog
                 Navigator.pop(context);
-              },
+              }, // LMAO
               child: Text("Cancel"),
             ),
             ElevatedButton(
