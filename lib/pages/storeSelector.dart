@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:goodsprice/constants/stores.dart';
 
 class storeSelector extends StatefulWidget {
   const storeSelector({super.key});
@@ -8,18 +9,20 @@ class storeSelector extends StatefulWidget {
 }
 
 class _storeSelectorState extends State<storeSelector> {
-  Map<String, String> Stores = {
-    '7 Eleven': '7eleven.png',
-    'NSK Trade City': 'NSK.jpg',
-    'KK Mart': 'KK_Mart.png',
-    '99 Speedmart': '99SM.png',
-    'Supervalue': 'supervalue.jpg'
-  };
+  // Map<String, String> Stores = {
+  //   '7 Eleven': '7eleven.png',
+  //   'NSK Trade City': 'NSK.jpg',
+  //   'KK Mart': 'KK_Mart.png',
+  //   '99 Speedmart': '99SM.png',
+  //   'Supervalue': 'supervalue.jpg'
+  // };
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading:
+            false, // Remoes back button, Forces user to select a store
         backgroundColor: Colors.amber,
         title: Text("Choose a Store"),
         centerTitle: true,

@@ -20,3 +20,13 @@ samples, guidance on mobile development, and a full API reference.
 1. Scan for price tag, users don't need to capture image
 2. BOunding Box recognition
 3. Guard Rails, allow numbers only for edit price
+
+
+
+
+# To include:
+- How text detection work
+    - The accepted margin
+- How price detection work
+- Databases Backend
+

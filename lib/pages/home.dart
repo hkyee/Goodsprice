@@ -32,7 +32,9 @@ class _homeState extends State<home> {
               child: Center(
                   child: ElevatedButton(
                 child: Text("Check Price Database"),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, '/checkPrice');
+                },
               ))),
           Container(
             margin: EdgeInsets.all(50.0),
@@ -42,7 +44,11 @@ class _homeState extends State<home> {
                 Navigator.pushNamed(
                   context,
                   '/camera',
-                  arguments: {'width': scanBoxWidth, 'height': scanBoxHeight},
+                  arguments: {
+                    'width': scanBoxWidth,
+                    'height': scanBoxHeight,
+                    'storeName': selectedStore
+                  },
                 );
               },
               child: Text("Scan Price Tag"),

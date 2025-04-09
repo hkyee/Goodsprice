@@ -184,7 +184,8 @@ String extractItemName(List<String> texts, List<TextBlock> textBlocks,
   String itemName =
       potentialItemNames.map((block) => block.text.trim()).join(' ');
 
-  String filteredItemName = itemName.replaceAll(RegExp(r'^\d+-\s*'), '');
+  String filteredItemName =
+      itemName.replaceAll(RegExp(r'^\d+-\s*'), '').replaceAll('\n', ' ');
   debugPrint("item name = ${filteredItemName}");
 
   return filteredItemName;

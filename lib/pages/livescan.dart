@@ -72,9 +72,10 @@ class _CameraScreenState extends State<cameraScreen> {
   @override
   Widget build(BuildContext context) {
     final args =
-        ModalRoute.of(context)!.settings.arguments as Map<String, double>;
+        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     double? scanBoxWidth = args['width'];
     double? scanBoxHeight = args['height'];
+    String storeName = args['storeName'];
     // Get screen width = 360
     double screenWidth = MediaQuery.of(context).size.width;
 
@@ -204,6 +205,7 @@ class _CameraScreenState extends State<cameraScreen> {
                                     'textBlocks': textBlocks,
                                     'imageRes': imageResCropped,
                                     'itemName': _extractedItemName,
+                                    'storeName': storeName,
                                   }, // Pass imagePath as an argument
                                 );
                               } catch (e) {
