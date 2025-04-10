@@ -8,6 +8,7 @@ import 'package:camera/camera.dart';
 import 'package:goodsprice/services/boxPainter.dart';
 import 'package:goodsprice/services/databaseHelper.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:fuzzywuzzy/fuzzywuzzy.dart';
 
 class scanResult extends StatefulWidget {
   const scanResult({super.key});
@@ -22,76 +23,129 @@ class _ScanresultState extends State<scanResult> {
   String _extractedPrice = "";
   String _extractedItemName = "";
   double constraintWidth = 0;
+  List<String> _matchedResults = [];
 
   // Function to edit item name
-  void _editItemName() {
-    // Function to get similar results using FTS5
-    Future<List<Map<String, dynamic>>> getSimilarResult(
-        String scanned_item_name) async {
+  void _editItemName() async {
+    List<String> matchedResults = [];
+    String? _selected;
+    bool correctedName = false;
+    // Function to get similar results using FuzzyWuzzy
+    Future<List<String>> getSimilarResult(String scanned_item_name) async {
       final db = await DatabaseHelper.instance.database;
-      return await db.rawQuery('''
+      final itemNames = await db.rawQuery('''
         SELECT
             item_name
         FROM ItemNames
-        WHERE item_name MATCH ?
-      ''', ['%$scanned_item_name%']);
+      ''');
+
+      for (var itemName in itemNames) {
+        int score = partialRatio(scanned_item_name.toLowerCase(),
+            itemName['item_name'].toString().toLowerCase());
+        if (score >= 80) {
+          matchedResults.add(itemName['item_name'].toString());
+        }
+      }
+      return matchedResults;
     }
 
-    // showDialog(
-    //   context: context,
-    //   builder: (context) {
-    //     return AlertDialog(
-    //       title: Text("Did you mean this?"),
-    //       content: Text(getSimilarResult),
-    //       actions: [
-    //         TextButton(
-    //           onPressed: () {},
-    //           child: Text("No"),
-    //         ),
-    //       ],
-    //     );
-    //   },
-    // );
+    _matchedResults = await getSimilarResult(_extractedItemName);
+    // Convert matchedResults (List<String>) into a list of DropdownMenuEntry
+    List<DropdownMenuEntry<String>> dropdownMenuEntries =
+        matchedResults.map((item) {
+      return DropdownMenuEntry<String>(
+        label: item,
+        value: item,
+      );
+    }).toList();
+
+    if (matchedResults.isNotEmpty) {
+      await showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text("Did you mean"),
+            content: DropdownMenu(
+              dropdownMenuEntries: dropdownMenuEntries,
+              hintText: "Select",
+              onSelected: (String? selected) {
+                setState(() {
+                  _selected = selected!;
+                });
+              },
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  // Close dialog
+                  Navigator.pop(context);
+                },
+                child: Text("No"),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    _extractedItemName = _selected!;
+                    correctedName = true;
+                  });
+                  Navigator.pop(context);
+                },
+                child: Text(
+                  "Save",
+                  style: TextStyle(color: Colors.white),
+                ),
+                style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(Colors.blue),
+                ),
+              ),
+            ],
+          );
+        },
+      );
+    }
 
     TextEditingController controller =
         TextEditingController(text: _extractedItemName);
-
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text("Edit Item Name"),
-          content: TextField(
-            controller: controller,
-            decoration: InputDecoration(labelText: "Enter correct item name"),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                // Close dialog
-                Navigator.pop(context);
-              },
-              child: Text("Cancel"),
+    if (!correctedName) {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text("Edit Item Name"),
+            content: TextField(
+              controller: controller,
+              decoration: InputDecoration(labelText: "Enter correct item name"),
             ),
-            ElevatedButton(
-              onPressed: () {
-                setState(() {
-                  _extractedItemName = controller.text;
-                });
-                Navigator.pop(context);
-              },
-              child: Text(
-                "Save",
-                style: TextStyle(color: Colors.white),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  // Close dialog
+                  Navigator.pop(context);
+                },
+                child: Text("Cancel"),
               ),
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+              ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    _extractedItemName = controller.text;
+                  });
+                  Navigator.pop(context);
+                },
+                child: Text(
+                  "Save",
+                  style: TextStyle(color: Colors.white),
+                ),
+                style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(Colors.blue),
+                ),
               ),
-            ),
-          ],
-        );
-      },
-    );
+            ],
+          );
+        },
+      );
+    }
   }
 
   // Function to edit price name

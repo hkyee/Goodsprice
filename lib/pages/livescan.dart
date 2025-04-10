@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/services.dart';
-import 'package:goodsprice/models/7eleven.dart';
 import 'dart:io';
 import 'package:goodsprice/services/priceTagBox.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
+
+// Models
+import 'package:goodsprice/models/7eleven.dart';
+// import 'package:goodsprice/models/KK.dart' as kk;
 
 class cameraScreen extends StatefulWidget {
   const cameraScreen({super.key, required this.camera});
@@ -24,6 +27,15 @@ class _CameraScreenState extends State<cameraScreen> {
   List<TextBlock> textBlocks = [];
   List<int> imageRes = [];
   List<int> imageResCropped = [];
+
+//   // Must update to call different models' functions
+//   final Map<String, String> modelsPrefix = {
+//   '7 Eleven': 'sevenE',
+//   'NSK Trade City': 'nsk',
+//   'KK Mart': 'kk',
+//   '99 Speedmart': 'nnsm',
+//   'Supervalue': 'superValue'
+// };
 
   @override
   void initState() {

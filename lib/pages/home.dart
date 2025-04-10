@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:goodsprice/constants/scanBoxDimensions.dart';
 
 class home extends StatefulWidget {
   const home({super.key});
@@ -9,13 +10,13 @@ class home extends StatefulWidget {
 
 class _homeState extends State<home> {
   String selectedStore = "Select store";
-  Map<String, Map<String, double>> scanBoxDimensions = {
-    '7 Eleven': {'width': 250, 'height': 250},
-    'NSK Trade City': {'width': 20, 'height': 20},
-    'KK Mart': {'width': 20, 'height': 20},
-    '99 Speedmart': {'width': 20, 'height': 20},
-    'Supervalue': {'width': 350, 'height': 150},
-  };
+  // Map<String, Map<String, double>> scanBoxDimensions = {
+  //   '7 Eleven': {'width': 250, 'height': 250},
+  //   'NSK Trade City': {'width': 20, 'height': 20},
+  //   'KK Mart': {'width': 20, 'height': 20},
+  //   '99 Speedmart': {'width': 20, 'height': 20},
+  //   'Supervalue': {'width': 350, 'height': 150},
+  // };
   double scanBoxHeight = 0;
   double scanBoxWidth = 0;
 
