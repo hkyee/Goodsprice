@@ -42,7 +42,7 @@ class _ScanresultState extends State<scanResult> {
       for (var itemName in itemNames) {
         int score = partialRatio(scanned_item_name.toLowerCase(),
             itemName['item_name'].toString().toLowerCase());
-        if (score >= 80) {
+        if (score >= 70) {
           matchedResults.add(itemName['item_name'].toString());
         }
       }

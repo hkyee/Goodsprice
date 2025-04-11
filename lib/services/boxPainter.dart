@@ -16,7 +16,7 @@ class TextBoundingBoxPainter extends CustomPainter {
     final Paint paint = Paint()
       ..color = Colors.red
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 2.0;
+      ..strokeWidth = 4.0;
 
     double ratio = imageRes[1] / constraintWidth;
 
@@ -38,9 +38,14 @@ class TextBoundingBoxPainter extends CustomPainter {
     double topPriceTag = 2 * priceTagBox.top / ratio;
     double rightPriceTag = 2 * priceTagBox.right / ratio;
     double bottomPriceTag = 2 * priceTagBox.bottom / ratio;
+
+    final Paint paint2 = Paint()
+      ..color = Colors.green
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 6.0;
     canvas.drawRect(
         Rect.fromLTRB(leftPriceTag, topPriceTag, rightPriceTag, bottomPriceTag),
-        paint);
+        paint2);
   }
 
   @override

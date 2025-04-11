@@ -4,14 +4,12 @@ import 'package:flutter/services.dart';
 import 'dart:io';
 import 'package:goodsprice/services/priceTagBox.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
-
+import 'package:goodsprice/constants/stores.dart';
 // Models
-import 'package:goodsprice/models/7eleven.dart';
-// import 'package:goodsprice/models/KK.dart' as kk;
+import 'package:goodsprice/models/models.dart';
 
 class cameraScreen extends StatefulWidget {
   const cameraScreen({super.key, required this.camera});
-
   final CameraDescription camera;
 
   @override
@@ -27,15 +25,7 @@ class _CameraScreenState extends State<cameraScreen> {
   List<TextBlock> textBlocks = [];
   List<int> imageRes = [];
   List<int> imageResCropped = [];
-
-//   // Must update to call different models' functions
-//   final Map<String, String> modelsPrefix = {
-//   '7 Eleven': 'sevenE',
-//   'NSK Trade City': 'nsk',
-//   'KK Mart': 'kk',
-//   '99 Speedmart': 'nnsm',
-//   'Supervalue': 'superValue'
-// };
+  Store? store;
 
   @override
   void initState() {
@@ -79,6 +69,23 @@ class _CameraScreenState extends State<cameraScreen> {
     // debugPrint(
     // "Image Resolution: ${decodedImage.width} × ${decodedImage.height}");
     return [decodedImage.height, decodedImage.width];
+  }
+
+  // A function to create a store class based on selected store
+  Store getStoreInstance(String storeName) {
+    var storeNames = Stores.keys.toList();
+    if (storeName == storeNames[0]) return SevenElevenStore(); // 7 11
+    // if (storeName == storeNames[1])
+    //   return                     // NSK
+    if (storeName == storeNames[2])
+      return KKMartStore(); // KK
+    // if (storeName == storeNames[3])
+    //   return ;                   // 99SM
+    // if (storeName == storeNames[4])
+    //   return                     // Supervalue
+    else {
+      throw Exception("Store not found");
+    }
   }
 
   @override
@@ -152,6 +159,8 @@ class _CameraScreenState extends State<cameraScreen> {
 
                                 // [0] : Height : 1920
                                 // [1] : Width  : 1080
+
+                                store = getStoreInstance(storeName);
                                 imageRes =
                                     await getImageResolution(File(image.path));
 
@@ -172,8 +181,9 @@ class _CameraScreenState extends State<cameraScreen> {
                                         (ratio * screenWidth))
                                     .toInt();
 
-                                File imageCropped = await cropImageFromFile(
-                                    image, left, top, width, height);
+                                File imageCropped = await store!
+                                    .cropImageFromFile(
+                                        image, left, top, width, height);
 
                                 imageResCropped =
                                     await getImageResolution(imageCropped);
@@ -191,16 +201,16 @@ class _CameraScreenState extends State<cameraScreen> {
                                 // V imageCropped is different
 
                                 // Get Text Block
-                                textBlocks = await getTextBlocks(
-                                    File(imageCropped.path));
+                                textBlocks = await store!
+                                    .getTextBlocks(File(imageCropped.path));
 
                                 // Scan Text
-                                _extractedText =
-                                    await scanText(File(imageCropped.path));
+                                _extractedText = await store!
+                                    .scanText(File(imageCropped.path));
                                 _extractedPrice =
-                                    extractPriceData(_extractedText);
+                                    store!.extractPriceData(_extractedText);
 
-                                _extractedItemName = extractItemName(
+                                _extractedItemName = store!.extractItemName(
                                     _extractedText,
                                     textBlocks,
                                     priceTagBox,
