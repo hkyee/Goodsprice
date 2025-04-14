@@ -101,9 +101,11 @@ Goodsprice solves this problem by empowering users to:
 <img src="static/price_check.jpg" alt="Price checker page" width="200"/>
 
 
-## Future Improvements
-- [ ] Add guard rails when editing price.
 
+## TODO:
+- [ ] Finish the branch "classes"
+- [ ] Remove Camera.dart, individual models (7eleven.dart , kk.dart)
+- [ ] Add guard rails when editing price.
 
 
 
