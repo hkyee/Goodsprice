@@ -103,9 +103,8 @@ Goodsprice solves this problem by empowering users to:
 
 
 ## TODO:
-- [ ] Finish the branch "classes"
-- [ ] Remove Camera.dart, individual models (7eleven.dart , kk.dart)
 - [ ] Add guard rails when editing price.
+- [ ] Implement for Family Mart.
 
 
 
