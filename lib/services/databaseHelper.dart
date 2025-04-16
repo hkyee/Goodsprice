@@ -20,10 +20,10 @@ class DatabaseHelper {
 
   // this opens the database (and creates it if it doesn't exist)
   _initDatabase() async {
-    // String path = join(await getDatabasesPath(), _databaseName);
+    String path = join(await getDatabasesPath(), _databaseName);
     // /data/user/0/com.example.goodsprice/databases/myDatabase.db
 
-    String path = join("/sdcard/Download/", _databaseName);
+    // String path = join("/sdcard/Download/", _databaseName);
     // debugPrint("Path : $path");
 
     // MUST DELETE OLD DATABASE OR ELSE IT WONT UPDATE

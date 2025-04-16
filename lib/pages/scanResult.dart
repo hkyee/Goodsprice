@@ -3,7 +3,6 @@ import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
-import 'package:goodsprice/models/7eleven.dart';
 import 'package:camera/camera.dart';
 import 'package:goodsprice/services/boxPainter.dart';
 import 'package:goodsprice/services/databaseHelper.dart';

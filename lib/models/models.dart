@@ -4,6 +4,7 @@ import 'package:camera/camera.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 import 'package:flutter/material.dart';
 import 'package:image/image.dart' as img;
+import 'package:path_provider/path_provider.dart';
 
 abstract class Store {
   XFile? image; // Holds the Captures image (not to gallery)
@@ -96,10 +97,10 @@ class SevenElevenStore extends Store {
     //Clear image cache
     imageCache.clear();
 
-    // final directory = await getApplicationDocumentsDirectory();
-    // final File imagePath = File('${directory.path}/cropped_image.jpg');
+    final directory = await getApplicationDocumentsDirectory();
+    final File imagePath = File('${directory.path}/cropped_image.jpg');
     // FOR DEBUGGING
-    final File imagePath = File('/sdcard/Download/cropped_image.jpg');
+    // final File imagePath = File('/sdcard/Download/cropped_image.jpg');
 
     // Delete before writing
     if (await imagePath.exists()) {

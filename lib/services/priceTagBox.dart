@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:opencv_dart/opencv_dart.dart' as cv;
-import 'dart:io';
-import 'package:image/image.dart';
+// import 'dart:io';
+// import 'package:image/image.dart';
 
 typedef Mat = cv.Mat;
 
@@ -32,9 +32,9 @@ Rect getPriceTagBox(String imagePath) {
 // mask = np.zeros(bw.shape, dtype=np.uint8);
 
 // CHeck image res
-  final file = File(imagePath);
-  final bytes = file.readAsBytesSync();
-  final img = decodeImage(bytes);
+  // final file = File(imagePath);
+  // final bytes = file.readAsBytesSync();
+  // final img = decodeImage(bytes);
   // debugPrint("Width : ${img!.width}");
   // debugPrint("Height: ${img!.height}");
 
